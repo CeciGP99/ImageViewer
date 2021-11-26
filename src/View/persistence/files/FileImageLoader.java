@@ -3,27 +3,36 @@ package View.persistence.files;
 import Model.Image;
 import View.persistence.ImageLoader;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.io.IOException;
 
 public class FileImageLoader implements ImageLoader{
+    
+    private final File[] files;
+    private final String[] ImageExtensions = {"jpg", "png", "bmp"};
 
-    private final String fileName;
-
-    public FileImageLoader(String fileName) {
-        this.fileName = fileName;
+    public FileImageLoader(String folder) {
+        this.files = new File(folder).listFiles(withImageExtensions());
+        
     }
     
     @Override
-    public Image load() {
+    public Image load(){
+        return imageAt(0);
+    }
+    
+    public Image imageAt(int index){
         
+        //Clase Anónima
         return new Image(){
             
             @Override
             public byte[] bitMap() {
                 try { 
-                    FileInputStream is = new FileInputStream(fileName);
+                    FileInputStream is = new FileInputStream(files[index]);
                     return read(is);
                 } catch (FileNotFoundException ex) {
                     System.out.println("" + ex.getMessage());
@@ -46,8 +55,36 @@ public class FileImageLoader implements ImageLoader{
                 }
                 return os.toByteArray();
             }
+
+            @Override
+            public Image next() {
+                if(files.length == index){
+                    return imageAt(0);
+                }else{
+                    return imageAt(index+1);
+                }
+            }
+
+            @Override
+            public Image previous() {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
         };
 
+    }
+
+    private FilenameFilter withImageExtensions() {
+        return new FilenameFilter(){
+          @Override
+          public boolean accept(File dir, String name){
+              for (String ImageExtension : ImageExtensions){
+                  if (name.endsWith(ImageExtension)){
+                      return true;
+                  }
+              }
+              return false;
+          }
+        };
     }
     
 }

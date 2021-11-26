@@ -13,6 +13,10 @@ import javax.swing.JPanel;
 public class SwingImageDisplay extends JPanel implements ImageDisplay{
 
     private Image image;
+    
+    public Image getImage(){
+        return image;
+    }
 
     public SwingImageDisplay() {
         super(new BorderLayout());
@@ -26,6 +30,7 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay{
         
         this.removeAll();
         this.add(imagePanel());
+        this.updateUI();
     }
 
     private Component imagePanel() {
