@@ -12,7 +12,7 @@ import java.io.IOException;
 public class FileImageLoader implements ImageLoader{
     
     private final File[] files;
-    private final String[] ImageExtensions = {"jpg", "png", "bmp"};
+    private final String[] ImageExtensions = {"jpg","png","bmp","jpeg"};
 
     public FileImageLoader(String folder) {
         this.files = new File(folder).listFiles(withImageExtensions());
@@ -67,7 +67,11 @@ public class FileImageLoader implements ImageLoader{
 
             @Override
             public Image previous() {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                if(index == 0){
+                    return imageAt(files.length);
+                }else{
+                    return imageAt(index-1);
+                }
             }
         };
 
