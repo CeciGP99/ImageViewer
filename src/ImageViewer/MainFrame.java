@@ -4,6 +4,8 @@ import Presenter.Command;
 import View.UI.Swing.SwingImageDisplay;
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JButton;
@@ -51,6 +53,12 @@ public class MainFrame extends JFrame {
     
     public Component button(String name){
         JButton jButton = new JButton(name);
+        jButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                commands.get(name).execute();
+            }
+        });
         return jButton;
     }
 }

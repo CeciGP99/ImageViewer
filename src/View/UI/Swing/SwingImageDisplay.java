@@ -14,16 +14,14 @@ public class SwingImageDisplay extends JPanel implements ImageDisplay{
 
     private Image image;
     
-    public Image getImage(){
-        return image;
-    }
-
-    public SwingImageDisplay() {
+        public SwingImageDisplay() {
         super(new BorderLayout());
     }
     
-    
-    
+    public Image getImage(){
+        return image;
+    }
+ 
     @Override
     public void display(Image image) {
         this.image = image;

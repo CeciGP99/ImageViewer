@@ -58,7 +58,7 @@ public class FileImageLoader implements ImageLoader{
 
             @Override
             public Image next() {
-                if(files.length == index){
+                if(index == files.length){
                     return imageAt(0);
                 }else{
                     return imageAt(index+1);
